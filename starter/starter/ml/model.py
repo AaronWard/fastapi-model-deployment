@@ -1,13 +1,13 @@
-from sklearn.metrics import fbeta_score, precision_score, recall_score
+"""
+Script for modelling related functions
 
+"""
 
-
-# import pandas as pd
+import pandas as pd
 from sklearn.metrics import fbeta_score, precision_score, recall_score
 from sklearn.ensemble import RandomForestClassifier as rf
-# from .data import process_data
+from .data import process_data
 
-# Optional: implement hyperparameter tuning.
 def train_model(X_train, y_train):
     """
     Trains a machine learning model and returns it.
@@ -68,11 +68,58 @@ def inference(model, X):
     """
     return model.predict(X)
 
-def compute_metrics_by_slice():
+
+def compute_metrics_by_slice(df,
+                             model,
+                             encoder,
+                             lb,
+                             cat_columns,
+                             target,
+                             output_path):
     """
+    This function outputs the performance of the model on slices of the data
 
+    args:
+        - df (pd.DataFrame): Input dataframe
+        - model (ml.model): Trained model binary file
+        - encoder (OneHotEncoder): fitted One Hot Encoder
+        - lb (LabelBinarizer): label binarizer
+        - cat_columns (list): list of categorical columns
+        - target (str): Class label string
+        - output_path (str:) Path to output the results
+    returns:
+        - metrics (pd.DataFrame): Output dataframe containing metric
 
     """
+    metrics = pd.DataFrame(columns=columns)
+    columns = ["col", "category", "precision", "recall", "f1"]
+
+    for col in cat_columns:
+        for category in df[col].unique():
+            row = {}
+            tmp_df = df[df[col]==category]
+
+            X, y, _, _ = process_data(
+                X=tmp_df,
+                categorical_features=cat_columns,
+                label=target,
+                training=False,
+                encoder=encoder,
+                lb=lb
+            )
+
+            preds = inference(model, X)
+            precision, recall, f1 = compute_model_metrics(y, preds)
+            row['col'] = col
+            row['category'] = category
+            row['precision'] = precision
+            row['recall'] = recall
+            row['f1'] = f1
+
+            metrics = metrics.append(row, ignore_index=True)
+
+    if output_path is not None:
+        metrics.to_csv(output_path)
 
 
-    return
+    return metrics

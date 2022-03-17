@@ -16,7 +16,8 @@ from ml.data import process_data
 data = pd.read_csv(config.DATA_PATH)
 
 
-# Optional enhancement, use K-fold cross validation instead of a train-test split.
+# Optional enhancement, use K-fold cross validation instead of a
+# train-test split.
 train, test = train_test_split(data, test_size=config.TEST_SPLIT_SIZE)
 X_train, y_train, encoder, lb = process_data(
     train, categorical_features=config.cat_features, label=config.TARGET, training=True
@@ -44,11 +45,11 @@ print(f"Recall: {recall}")
 print(f"F1: {f_one}")
 
 model.compute_metrics_by_slice(
-    clf=mod,
+    df=test,
+    model=mod,
     encoder=encoder,
     lb=lb,
-    df=test,
-    target=config.TARGET,
     cat_columns=config.cat_features,
-    output_path=config.METRICS_PATH,
+    target=config.TARGET,
+    output_path=config.METRICS_OUTPUT_PATH
 )
