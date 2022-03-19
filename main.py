@@ -6,10 +6,10 @@ import uvicorn
 from fastapi.responses import JSONResponse
 from fastapi import FastAPI
 
-from starter.data_model import BasicInputData
-import starter.starter.config as config
-from starter.starter.ml.data import process_data
-from starter.starter.ml.model import inference
+from data_model import BasicInputData
+import starter.config as config
+from starter.ml.data import process_data
+from starter.ml.model import inference
 
 
 # if "DYNO" in os.environ and os.path.isdir(".dvc"):
