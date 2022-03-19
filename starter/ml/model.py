@@ -92,10 +92,8 @@ def compute_metrics_by_slice(df,
 
 
     """
-    cols = ["col", "category", "precision", "recall", "f1"]
 
-    metrics = pd.DataFrame(columns=cols)
-
+    rows_list = list()
     for col in cat_columns:
         for category in df[col].unique():
             row = {}
@@ -111,15 +109,17 @@ def compute_metrics_by_slice(df,
             )
 
             preds = inference(model, x)
-            precision, recall, f1 = compute_model_metrics(y, preds)
+            precision, recall, f_one = compute_model_metrics(y, preds)
 
             row['col'] = col
             row['category'] = category
             row['precision'] = precision
             row['recall'] = recall
-            row['f1'] = f1
+            row['f1'] = f_one
 
-            metrics = metrics.append(row, ignore_index=True)
+            rows_list.append(row)
+
+    metrics = pd.DataFrame(rows_list, columns=["col", "category", "precision", "recall", "f1"])
 
     if output_path:
         metrics.to_csv(output_path)
