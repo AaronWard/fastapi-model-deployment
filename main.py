@@ -69,9 +69,6 @@ async def prediction(input_data: BasicInputData):
         lb=lb
     )
 
-    # get predictions
+    # get predictions and return
     pred = inference(model, x_data)
-    json_res = JSONResponse({"Result": str(pred[0])})
-
-    # return model output
-    return json_res
+    return JSONResponse({"Result": int(pred[0])})

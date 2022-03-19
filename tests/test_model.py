@@ -4,19 +4,29 @@ Unit testing for modelling functions located in ../starters
 """
 
 import os
+import sys
 import pytest
 import pandas as pd
 import pickle as pkl
 from sklearn.model_selection import train_test_split
 
-import starter.config as config
-from starter.ml.data import process_data
-from starter.ml.model import train_model, inference, compute_model_metrics, compute_metrics_by_slice
+
+try:
+    import starter.config as config
+    from starter.ml.data import process_data
+    from starter.ml.model import (train_model, inference,
+                                compute_model_metrics, compute_metrics_by_slice)
+except ModuleNotFoundError:
+    sys.path.append('./')
+    import starter.config as config
+    from starter.ml.data import process_data
+    from starter.ml.model import (train_model, inference,
+                        compute_model_metrics, compute_metrics_by_slice)
 
 @pytest.fixture()
 def input_df():
     df = pd.read_csv(config.DATA_PATH)
-    train, test = train_test_split(df, test_size=config.TEST_SIZE)
+    train, test = train_test_split(df, test_size=config.TEST_SPLIT_SIZE)
     return train, test
 
 
@@ -55,17 +65,13 @@ def test_process_data(input_df):
         training=True
     )
 
-    X_test, y_test, encoder, lb = process_data(
+    X_test, y_test, _, _ = process_data(
         X=test_df,
         categorical_features=config.cat_features,
         label=config.TARGET,
-        training=False,
-        encoder=encoder,
-        lb=lb
-    )
+        training=True,
 
-    # Assert features and sample sizes
-    assert X_train.shape[1] == X_test.shape[1]
+    )
 
     assert len(X_train) == len(y_train)
     assert len(X_test) == len(y_test)
