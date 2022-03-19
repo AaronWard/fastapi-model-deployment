@@ -15,19 +15,11 @@ jobs:
     - name: Check repo
       uses: actions/checkout@v2 # Calling a pre-built GitHub Action which allows your Action to access your repository.
     
-    - name: Set up Python ${{ matrix.python-version }} # Name of an action that sets up Python.
+    - name: Set up Python # Name of an action that sets up Python.
       uses: actions/setup-python@v1 # A pre-built GitHub Action that sets up a Python environment.
       with:
         python-version: 3.8
-    
-    # Add AWS credentials 
-#     - name: Configure AWS Credentials
-#       uses: aws-actions/configure-aws-credentials@v1
-#       with:
-#         role-to-assume: arn:aws:iam::153806637386:role/my-github-actions-role
-#         aws-region: us-east-2
-#         role-session-name: AwsTest
-        
+            
     - name: Configure AWS Credentials
       uses: aws-actions/configure-aws-credentials@v1
       with:
