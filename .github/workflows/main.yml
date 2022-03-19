@@ -47,8 +47,7 @@ jobs:
       uses: iterative/setup-dvc@v1
     - name: Pull DVC's data
       run: |
-#       dvc remote modify s3_remote url s3://mybucket/path
-        dvc pull -v -r s3_remote
+        dvc pull -v 
     
     # Install dependencies
     - name: Install dependencies
