@@ -46,7 +46,7 @@ jobs:
     - name: Set-up DVC
       uses: iterative/setup-dvc@v1
     - name: Pull DVC's data
-      run: dvc pull
+      run: dvc pull -r s3_remote
     
     # Install dependencies
     - name: Install dependencies
