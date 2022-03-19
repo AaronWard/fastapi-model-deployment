@@ -101,7 +101,7 @@ def compute_metrics_by_slice(df,
             row = {}
             tmp_df = df[df[col]==category]
 
-            X, y, _, _ = process_data(
+            x, y, _, _ = process_data(
                 X=tmp_df,
                 categorical_features=cat_columns,
                 label=target,
@@ -110,7 +110,7 @@ def compute_metrics_by_slice(df,
                 lb=lb
             )
 
-            preds = inference(model, X)
+            preds = inference(model, x)
             precision, recall, f1 = compute_model_metrics(y, preds)
 
             row['col'] = col
@@ -121,8 +121,7 @@ def compute_metrics_by_slice(df,
 
             metrics = metrics.append(row, ignore_index=True)
 
-    if output_path is not None:
+    if output_path:
         metrics.to_csv(output_path)
-
 
     return metrics
