@@ -11,10 +11,6 @@ import config
 from ml import model
 from ml.data import process_data
 
-import os
-print(os.getcwd())
-
-
 # Add code to load in the data.
 data = pd.read_csv(config.DATA_PATH)
 
