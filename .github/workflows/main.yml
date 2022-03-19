@@ -7,7 +7,6 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest # Which OS this runs on, you can also build on Windows or MacOS.
-    python-version: 3.8 
     permissions:
       id-token: write
       contents: read
@@ -19,7 +18,7 @@ jobs:
     - name: Set up Python ${{ matrix.python-version }} # Name of an action that sets up Python.
       uses: actions/setup-python@v1 # A pre-built GitHub Action that sets up a Python environment.
       with:
-        python-version: ${{ matrix.python-version }}
+        python-version: 3.8
     
     # Add AWS credentials 
 #     - name: Configure AWS Credentials
