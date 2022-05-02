@@ -6,9 +6,11 @@ Heroku.
 import os
 import requests
 
-URL = "https://award40-udacity.herokuapp.com"
+# URL = "https://award40-udacity.herokuapp.com"
+URL = "http://127.0.0.1:8000"
 
-response = requests.post(os.path.join(URL, "/model"), json={
+
+response = requests.post(os.path.join(URL, "model"), json={
                     "age": 55,
                     "workclass": "Private",
                     "fnlgt": 77516,
