@@ -54,11 +54,8 @@ async def prediction(input_data: BasicInputData):
     """
     # Formatting input_data
     input_df = pd.DataFrame(
-        {k: v for k, v in input_data.dict().items()}, index=[0]
+        {k: v for k, v in input_data.dict(by_alias=True).items()}, index=[0]
     )
-
-    input_df.columns = [_.replace('_', '-') for _ in input_df.columns]
-
 
     x_data, _, _, _ = process_data(
         X=input_df,
@@ -71,4 +68,4 @@ async def prediction(input_data: BasicInputData):
 
     # get predictions and return
     pred = inference(model, x_data)
-    return JSONResponse({"Result": int(pred[0])})
+    return {"Result": int(pred[0])}
