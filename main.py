@@ -68,4 +68,4 @@ async def prediction(input_data: BasicInputData):
 
     # get predictions and return
     pred = inference(model, x_data)
-    return {"Result": int(pred[0])}
+    return {"Result": "<=50K" if int(pred[0]) == 0 else ">50K"}
