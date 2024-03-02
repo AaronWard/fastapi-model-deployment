@@ -1,5 +1,5 @@
 
-Github Repo: https://github.com/AaronWard/nd0821-c3-starter-code
+![](./screenshots/live_endpoint_query_output.png)
 
 ------
 
